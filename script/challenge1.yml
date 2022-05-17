@@ -1,0 +1,51 @@
+Parameters:
+  SubnetID:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet.
+  AMI:
+    Type: String
+    Description: AMI.
+  VPC:
+    Type: AWS::EC2::VPC::Id
+    Description: Vpc.
+
+Description: >
+    Stephen Olayemi/ Udacity
+    This script creates a security group and ec2 instance, and also attach the ec3 instance to the secrity group
+
+Resources:
+    webAccessSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties:
+            GroupDescription: Allow http to our test host
+            VpcId:
+              Ref: VPC
+            SecurityGroupIngress:
+                - IpProtocol: tcp
+                  FromPort: 80
+                  ToPort: 80
+                  CidrIp: 0.0.0.0/0
+            SecurityGroupEgress:
+                - IpProtocol: -1
+                  FromPort: -1
+                  ToPort: -1
+                  CidrIp: 0.0.0.0/0
+    awsInstance:
+        Type: AWS::EC2::Instance
+        Properties:
+            InstanceType: t3.micro
+            ImageId: !Ref AMI
+            NetworkInterfaces:
+                - AssociatePublicIpAddress: true
+                  SubnetId: !Ref SubnetID
+                  DeviceIndex: "0"
+                  GroupSet: 
+                      - !Ref webAccessSecurityGroup
+            UserData:
+                  #!/bin/bash
+                  sudo yum update -y
+                  sudo yum install -y httpd
+                  sudo systemctl start httpd
+                  sudo systemctl enable httpd 
+                 
+            

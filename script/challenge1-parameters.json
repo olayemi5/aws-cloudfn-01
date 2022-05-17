@@ -1,0 +1,14 @@
+[
+    {
+      "ParameterKey": "VPC",
+      "ParameterValue": "vpc-0fbf77921293ce9ae"
+    },
+    {
+      "ParameterKey": "SubnetID",
+      "ParameterValue": "subnet-05fbdb0d4c37d0c7a"
+    },
+    {
+      "ParameterKey": "AMI",
+      "ParameterValue": "ami-0022f774911c1d690"
+    }
+]
